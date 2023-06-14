@@ -103,22 +103,12 @@ read_error:
 	
 	j exit
 
-##################################################
-	
-##############TIPO I###################
-type_i:
-
-
-##############TIPO R##################
-type_r:
-
-
-
-
-#############TIPO J###################
-type_j_jal:
-
-type_j_j:
+end_output:
+	lw		$a0, 0($sp)		#descritor do arquivo de output
+	la		$a1, str_end_line	#mensagem de instrução não encontrada no sitema
+	addi	$a2, $0, 2			#qtd de bytes que serao escritos
+	addi	$v0, $zero, WRITE_FILE
+	syscall
 
 read_word:
 	# leitura do arquivo
@@ -220,18 +210,97 @@ hex_to_file:
 		
 assembly_process:
 
-	lw			$s4, 0($sp)
+	lw			$s5, 0($sp)
 	srl 		$s4, $t0, 26
 	#descobre opcode
 	
 	#tipo r -> opcode == 0
-	beq			$s4, $zero, type
+	beq			$s4, $zero, type_r
 	
 	#tipo j -> opcode == 2 && == 3
 	beq			$s4, 0x02, type_j_j
 	beq			$s4, 0x03, type_j_jal
 	
 	#tipo i -> opcode =- 4 p cima
+	
+
+##############TRATAMENTO DE TIPOS#####################
+
+##############TIPO R##################
+type_r:
+	
+#  opcode    rs      rt       rd      sa      fn
+#  31-26   25-21   20-16    15-11    10-6    5-0
+	
+	#shift left pra isolar o funct de 0 a 6 
+	sll		$t0, $s5, 26
+	#shift right pra isolar o fn de 0 a 6
+	srl		$t0, $t0, 26
+	
+	
+	## comparação para ver se o funct não é uma das instruções abaixo
+	beq		$t0, 0x20, funct_add
+	#beq		$t0, 0x21, funct_addu
+	#beq		$t0, 0x22, funct_sub
+	#beq		$t0, 0x23, funct_subu
+	#beq		$t0, 0x24, funct_and
+	#beq		$t0, 0x0D, funct_break
+	#beq		$t0, 0x1A, funct_div 
+	#beq		$t0, 0x1B, funct_divu
+	#beq		$t0, 0x09, funct_jalr
+	#beq		$t0, 0x08, funct_jr
+	#beq		$t0, 0x10, funct_mfhi
+	#beq		$t0, 0x12, funct_mflo
+	#beq		$t0, 0x11, funct_mthi
+	#beq		$t0, 0x13, funct_mtlo
+	#beq		$t0, 0x18, funct_mult
+	#beq		$t0, 0x19, funct_multu
+	#beq		$t0, 0x27, funct_nor
+	#beq		$t0, 0x25, funct_or
+	#beq 	$t0, 0x00, funct_sll
+	#beq		$t0, 0x04, funct_sllv
+	#beq		$t0, 0x2A, funct_slt
+	#beq		$t0, 0x2B, funct_sltu
+	#beq		$t0, 0x03, funct_sra
+	#beq		$t0, 0x07, funct_srav
+	#beq		$t0, 0x02, funct_srl
+	#beq		$t0, 0x06, funct_srlv
+	#beq		$t0, 0x0C, funct_syscall
+	#beq		$t0, 0x26, funct_xor
+	
+	lw		$a0, 0($sp)		#descritor do arquivo de output
+	la		$a1, str_nao_instr	#mensagem de instrução não encontrada no sitema
+	addi	$a2, $0, 37			#qtd de bytes que serao escritos
+	addi	$v0, $zero, WRITE_FILE
+	syscall
+	
+	j end_output
+	
+	
+###  functs  ###
+
+	funct_add:
+	
+		lw	$a0, 0($sp)
+		la	$a1, str_add
+		addi $a2, $zero, 4
+		addi $v0, $zero, WRITE_FILE
+		syscall
+		
+		jal check_regs
+
+
+#############TIPO J###################
+type_j_jal:
+
+type_j_j:
+
+
+##############TIPO I###################
+type_i:
+
+
+check_regs:
 
 close_file:
 
@@ -268,29 +337,36 @@ str_hex_x:			.asciiz "x"
 
 ## instrucoes:
 
-str_add:			.asciiz "add "
-str_addi:			.asciiz "addi "
-str_addiu:			.asciiz "addiu "
-str_addu:			.asciiz "addu "
-str_and:			.asciiz "and "
-str_andi:			.asciiz "andi "
-str_beq:			.asciiz "beq "
-str_bne:			.asciiz "bne "
-str_j:				.asciiz "j "
-str_jal:			.asciiz "jal "
-str_jr:				.asciiz "jr "
-str_lbu:			.asciiz "lbu "
-str_lhu:			.asciiz "lhu "
-str_lui:			.asciiz "lui "
-str_lw:				.asciiz "lw "
-srt_nor:			.asciiz "nor "
-srt_or:				.asciiz "or "
-srt_ori:			.asciiz "ori "
-srt_slt:			.asciiz "slt "
-srt_slti:			.asciiz "slti "
-srt_sltiu:			.asciiz "sltiu "
-srt_sltu:			.asciiz "sltu "
-srt_sll:			.asciiz "sll "
+### TIPO R ####
+											##functs
+str_add:			.asciiz "add "			#100000
+str_addu:			.asciiz "addu"			#100001
+str_and:			.asciiz "and "			#100100
+str_break:			.asciiz "break "		#001101
+str_div:			.asciiz "div "			#011010
+str_divu:			.asciiz "divu"			#011011
+str_jalr:			.asciiz "jalr"			#001001
+str_jr:				.asciiz	"jr "			#001000
+str_mfhi:			.asciiz "mfhi"			#010000
+str_mflo:			.asciiz "mflo"			#010010
+str_mthi:			.asciiz "mthi"			#010001
+str_mtlo:			.asciiz	"mtlo "			#010011
+str_mult:			.asciiz "mult " 		#011000
+str_multu:			.asciiz "multu "		#011001
+str_nor:			.asciiz "nor "			#100111
+str_or:				.asciiz "or "			#100101
+str_sll:			.asciiz "sll "			#000000
+str_sllv:			.asciiz "sllv "			#000100
+str_slt:			.asciiz "slt "			#101010
+str_sltu:			.asciiz "sltu "			#101011
+str_sra:			.asciiz "sra "			#000011
+str_srav:			.asciiz "srav "			#000111
+str_srl:			.asciiz "srl "			#000010
+str_srlv:			.asciiz "srlv "			#000110
+str_sub:			.asciiz "sub "			#100010
+str_subu:			.asciiz "subu "			#100011
+str_syscall:		.asciiz "syscall "		#001100
+str_xor:			.asciiz "xor "			#100110
 
 ## registradores
 
