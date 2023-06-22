@@ -64,6 +64,10 @@ assembly_process:
 	srl 		$s4, $s5, 26
 	#descobre opcode
 	
+	addi	$v0, $0, 1
+	add		$a0, $zero, $s4
+	syscall
+	
 	#tipo r -> opcode == 0
 	beq			$s4, $zero, type_r
 
@@ -77,6 +81,15 @@ assembly_process:
 	beq			$s4, 0x03, type_j_jal
 	
 	#tipo i -> opcode
+	
+	#else
+	lw			$a0, -4($sp)
+	la			$a1, str_nao_instr
+	addi		$a2, $zero, 37
+	addi		$v0, $zero, WRITE_FILE
+	syscall
+	
+	j endline_output
 
 
 save_file:
@@ -124,6 +137,11 @@ print_assembly:
 	syscall
 	
 	j assembly_process 
+	
+endline_output:
+	addi	$v0, $zero, PRINT_STR
+	la		$a0, str_end_line
+	syscall
 	
 ##############TRATAMENTO DE TIPOS#####################
 
@@ -176,6 +194,13 @@ type_r:
 	
 	j endline_output
 	
+### opcodes  ###
+
+opcode_1:
+
+opcode_1c:
+
+
 ###  functs  ###
 
 	funct_add:
@@ -217,7 +242,7 @@ type_r:
 	funct_addu:
 	
 		lw	$a0, -4($sp)
-		la	$a1, str_add
+		la	$a1, str_addu
 		addi $a2, $zero, 4
 		addi $v0, $zero, WRITE_FILE
 		syscall
@@ -253,7 +278,7 @@ type_r:
 	funct_and:
 	
 		lw	$a0, -4($sp)
-		la	$a1, str_add
+		la	$a1, str_and
 		addi $a2, $zero, 4
 		addi $v0, $zero, WRITE_FILE
 		syscall
@@ -287,10 +312,17 @@ type_r:
 		j endline_output
 
 	funct_break:
-	
+		lw	$a0, -4($sp)
+		la	$a1, str_break
+		addi $a2, $zero, 4
+		addi $v0, $zero, WRITE_FILE
+		syscall
+		
+		j endline_output
+		
 	funct_div: 
 		lw	$a0, -4($sp)
-		la	$a1, str_add
+		la	$a1, str_div
 		addi $a2, $zero, 4
 		addi $v0, $zero, WRITE_FILE
 		syscall
@@ -325,7 +357,7 @@ type_r:
 	
 	funct_divu:
 		lw	$a0, -4($sp)
-		la	$a1, str_add
+		la	$a1, str_divu
 		addi $a2, $zero, 4
 		addi $v0, $zero, WRITE_FILE
 		syscall
@@ -351,7 +383,7 @@ type_r:
 		addi $a2, $0, 1
 		addi $v0, $0, WRITE_FILE
 		syscall
-		
+		#rt
 		sll	$t0, $s5, 11
 		srl	$t0, $t0, 27
 		jal check_regs	
@@ -359,10 +391,57 @@ type_r:
 		j endline_output
 		
 	funct_jalr:
+		lw	$a0, -4($sp)
+		la	$a1, str_jalr
+		addi $a2, $zero, 4
+		addi $v0, $zero, WRITE_FILE
+		syscall
+		
+		# isola o registrador destino
+		sll $t0, $s5, 16
+		srl $t0, $t0, 27
+		jal check_regs	# identifica os registradores
+		
+		lw	$a0, -4($sp)
+		la	$a1, str_virgula
+		addi $a2, $zero, 1
+		addi $v0, $zero, WRITE_FILE
+		syscall
+		
+		#isola o rs 
+		sll	$t0, $s5, 6
+		srl	$t0, $t0, 27	
+		jal check_regs
+		
+		j endline_output
 	
 	funct_jr:
+		lw	$a0, -4($sp)
+		la	$a1, str_jr
+		addi $a2, $zero, 4
+		addi $v0, $zero, WRITE_FILE
+		syscall
+		
+		#isola o rs 
+		sll	$t0, $s5, 6
+		srl	$t0, $t0, 27	
+		jal check_regs
+		
+		j endline_output
 	
 	funct_mfhi:
+		lw	$a0, -4($sp)
+		la	$a1, str_mfhi
+		addi $a2, $zero, 4
+		addi $v0, $zero, WRITE_FILE
+		syscall
+		
+		# isola o registrador destino
+		sll $t0, $s5, 16
+		srl $t0, $t0, 27
+		jal check_regs	# identifica os registradores
+		
+		j endline_output
 	
 	funct_mflo:
 	
@@ -376,7 +455,7 @@ type_r:
 	
 	funct_nor:
 		lw	$a0, -4($sp)
-		la	$a1, str_add
+		la	$a1, str_nor
 		addi $a2, $zero, 4
 		addi $v0, $zero, WRITE_FILE
 		syscall
@@ -411,7 +490,7 @@ type_r:
 	
 	funct_or:
 		lw	$a0, -4($sp)
-		la	$a1, str_add
+		la	$a1, str_or
 		addi $a2, $zero, 4
 		addi $v0, $zero, WRITE_FILE
 		syscall
@@ -444,9 +523,19 @@ type_r:
 		
 		j endline_output
 	
+	funct_sll:
+
+	funct_sllv:
+	funct_slt:
+	funct_sltu:
+	funct_sra:
+	funct_srav: 
+	funct_srl:
+	funct_srlv:
+	
 	funct_sub: 
 		lw	$a0, -4($sp)
-		la	$a1, str_add
+		la	$a1, str_sub
 		addi $a2, $zero, 4
 		addi $v0, $zero, WRITE_FILE
 		syscall
@@ -481,7 +570,7 @@ type_r:
 	
 	funct_subu:
 		lw	$a0, -4($sp)
-		la	$a1, str_add
+		la	$a1, str_subu
 		addi $a2, $zero, 4
 		addi $v0, $zero, WRITE_FILE
 		syscall
@@ -514,6 +603,9 @@ type_r:
 		
 		j endline_output
 	
+	
+	funct_syscall:
+	funct_xor:
 
 
 #############TIPO J###################
@@ -530,27 +622,25 @@ check_regs:
 	beq	$t0, 0x00, reg00	#zero
 	beq	$t0, 0x01, reg01 	#at
 	beq $t0, 0x02, reg02
-
-endline_output:
-	addi	$v0, $zero, PRINT_STR
-	la		$a0, str_end_line
-	syscall
+	
+	
+	
+reg00:
+reg01:
+reg02:
 	
 check_file:
 	## LÊ ARQUIVO DE ENTRADA - de 4 em 4 bytes
-	addi	$sp, $sp, -12	#abre a pilha
-	lw		$t0, 0($sp)		#carrega em $t0 o arquivo de input 
-	
+	lw		$t0, 0($sp)		#carrega em $t0 o arquivo de input
+	move	$a0, $t0
+	addiu	$a1, $sp, 4		# onde vai ser salvo 
+	addi	$a2, $zero, 4
 	addi	$v0, $zero, READ_FILE
-	move	$a0, $t0	#move o endereço do input para $a0 para chamar a diretiva de leitura
-	la		$a1, buffer
-	addi	$a2, $zero, 4 # quantidade de bytes a serem lidos por vez
 	syscall
 	
-	slti	$t1, $v0, 4	#checa se 4 bytes foram lidos
+	slti	$t0, $a0, 4	#checa se 4 bytes foram lidos
 	beq		$t0, $0, save_file		# se sim, salva arquivo
 	# se nao
-	j close_file
 
 close_file:
 	
@@ -590,11 +680,11 @@ to_string:
 		srlv $s1, $s1, $t0
 		add	$s1, $s1, $t1
 		
-		lb	$s1, 0($s1)
-		sb	$s1, 0($s1) 
+		lbu	$s1, 0($s1)
+		sb	$s1, 0($a1) 
 		
-		addi $a1, $a1, 1 	#incrementa em 1 o ponteiro do endereço do valor de conversao
-		addi $t0, $t0, -4	# decrementa do contador 4 bits
+		addiu $a1, $a1, 1 	#incrementa em 1 o ponteiro do endereço do valor de conversao
+		addiu $t0, $t0, -4	# decrementa do contador 4 bits
 		srl $s0, $s0, 4		#ajusta a máscara
 		
 		bne	$s0, $zero, loop_str	#se a máscara for diferente de 0, continua chamando funcao
