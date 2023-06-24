@@ -144,11 +144,14 @@ endline_output:
 check_file:
 	## LÊ ARQUIVO DE ENTRADA - de 4 em 4 bytes
 	lw     	$a0, 0($sp)   # descritor que esta salvo na pilha
-    addiu	$a1, $sp, 4   # endereco onde vai salvar a palavra
+    addiu	$a1, $sp, 12   # endereco onde vai salvar a palavra
     addi	$a2, $0, 4        # numero de caracteres lidos
     addi  	$v0, $0, READ_FILE
     syscall
 
+	move	$a0, $v0
+	li		$v0, PRINT_INT
+	syscall
     # Verifica se foram lidos 4 bytes
     beq $v0, $zero, close_file  # se não foram lidos nenhum byte, pula para close_file
 
