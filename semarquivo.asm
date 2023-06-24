@@ -12,10 +12,8 @@
 .globl main
 
 	main:
-	lw	$t0, inst_subu
-	sw	$t0, 0($sp)
-	li  $t0,  0x00400000
-	sw  $t0, 4($sp) # primeira instrução
+	
+	
 	
 	assembly_process:
 	lw			$s5, 0($sp)
@@ -71,12 +69,12 @@
 	
 	j endline_output
 	
-endline_output:
+	endline_output:
 	la		$a0, str_end_line
 	addi	$v0, $zero, PRINT_STR
 	syscall
 
-exit:
+	exit:
 	addi	$a0, $zero, 0
 	addi 	$v0, $zero, EXIT_2
 	syscall
@@ -84,7 +82,7 @@ exit:
 ##############TRATAMENTO DE TIPOS#####################
 
 ##############TIPO R##################
-type_r:
+	type_r:
 	
 #  opcode    rs      rt       rd      sa      fn
 #  31-26   25-21   20-16    15-11    10-6    5-0
@@ -140,883 +138,1511 @@ type_r:
 
 	funct_add:
 	
-		la	$a0, str_add
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_add
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		# isola o registrador destino
-		srl $t0, $s5, 11
-		andi $t0, $t0, 0x1F
-		move $a0, $t0 
-		jal check_regs	# identifica os registradores
+		srl 	$t0, $s5, 11
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0 
+		jal 	check_regs	# identifica os registradores
 		
-		la	$a0, str_virgula
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		#isola o rs 
-		srl	$t0, $s5, 21
-		andi $t0, $t0, 0X1F
-		move $a0, $t0	
-		jal check_regs
+		srl		$t0, $s5, 21
+		andi 	$t0, $t0, 0X1F
+		move 	$a0, $t0	
+		jal 	check_regs
 		
-		la	$a0, str_virgula
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		#rt
-		srl	$t0, $s5, 16
-		andi $t0, $t0, 0x1F
-		move $a0, $t0
-		jal check_regs	
+		srl		$t0, $s5, 16
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0
+		jal 	check_regs	
 		
-		j endline_output
+		j 		endline_output
 		
 	funct_addu:
 	
-		la	$a0, str_addu
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_addu
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		# isola o registrador destino
-		srl $t0, $s5, 11
-		andi $t0, $t0, 0x1F
-		move $a0, $t0 
-		jal check_regs	# identifica os registradores
+		srl 	$t0, $s5, 11
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0 
+		jal 	check_regs	# identifica os registradores
 		
-		la	$a0, str_virgula
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		#isola o rs 
-		srl	$t0, $s5, 21
-		andi $t0, $t0, 0X1F
-		move $a0, $t0	
-		jal check_regs
+		srl		$t0, $s5, 21
+		andi 	$t0, $t0, 0X1F
+		move 	$a0, $t0	
+		jal 	check_regs
 		
-		la	$a0, str_virgula
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		#rt
-		srl	$t0, $s5, 16
-		andi $t0, $t0, 0x1F
-		move $a0, $t0
-		jal check_regs
+		srl		$t0, $s5, 16
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0
+		jal 	check_regs
 		
-		j endline_output
+		j 		endline_output
 	
 	funct_and:
 	
-		la	$a0, str_and
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_and
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		# isola o registrador destino
-		srl $t0, $s5, 11
-		andi $t0, $t0, 0x1F
-		move $a0, $t0 
-		jal check_regs	# identifica os registradores
+		srl 	$t0, $s5, 11
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0 
+			jal check_regs	# identifica os registradores
 		
-		la	$a0, str_virgula
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		#isola o rs 
-		srl	$t0, $s5, 21
-		andi $t0, $t0, 0X1F
-		move $a0, $t0	
-		jal check_regs
+		srl		$t0, $s5, 21
+		andi 	$t0, $t0, 0X1F
+		move 	$a0, $t0	
+			jal check_regs
 		
-		la	$a0, str_virgula
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		#rt
-		srl	$t0, $s5, 16
-		andi $t0, $t0, 0x1F
-		move $a0, $t0
-		jal check_regs	
+		srl		$t0, $s5, 16
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0
+			jal check_regs
 		
-		j endline_output
+		j 	endline_output
 
 	funct_break:
-		la	$a0, str_break
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_break
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
-		j endline_output
+		j 	endline_output
 		
 	funct_div: 
-		la	$a0, str_div
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_div
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		# isola o registrador destino
-		srl $t0, $s5, 11
-		andi $t0, $t0, 0x1F
-		move $a0, $t0 
-		jal check_regs	# identifica os registradores
+		srl 	$t0, $s5, 11
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0 
+			jal check_regs	# identifica os registradores
 		
-		la	$a0, str_virgula
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		#isola o rs 
-		srl	$t0, $s5, 21
-		andi $t0, $t0, 0X1F
-		move $a0, $t0	
-		jal check_regs
+		srl		$t0, $s5, 21
+		andi 	$t0, $t0, 0X1F
+		move 	$a0, $t0	
+			jal check_regs
 		
-		la	$a0, str_virgula
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		#rt
-		srl	$t0, $s5, 16
-		andi $t0, $t0, 0x1F
-		move $a0, $t0
-		jal check_regs
+		srl		$t0, $s5, 16
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0
+			jal check_regs
 		
-		j endline_output
+		j		endline_output
 	
 	funct_divu:
-		la	$a0, str_divu
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_divu
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		# isola o registrador destino
-		srl $t0, $s5, 11
-		andi $t0, $t0, 0x1F
-		move $a0, $t0 
-		jal check_regs	# identifica os registradores
+		srl 	$t0, $s5, 11
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0 
+			jal check_regs	# identifica os registradores
 		
-		la	$a0, str_virgula
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		#isola o rs 
-		srl	$t0, $s5, 21
-		andi $t0, $t0, 0X1F
-		move $a0, $t0	
-		jal check_regs
+		srl		$t0, $s5, 21
+		andi 	$t0, $t0, 0X1F
+		move 	$a0, $t0	
+			jal check_regs
 		
-		la	$a0, str_virgula
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		#rt
-		srl	$t0, $s5, 16
-		andi $t0, $t0, 0x1F
-		move $a0, $t0
-		jal check_regs
+		srl		$t0, $s5, 16
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0
+			jal check_regs
 		
-		j endline_output
+		j 		endline_output
 		
 	funct_jalr:
-		la	$a0, str_jalr
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_jalr
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		# isola o registrador destino
-		srl $t0, $s5, 11
-		andi $t0, $t0, 0x1F
-		move $a0, $t0 
-		jal check_regs	# identifica os registradores
+		srl 	$t0, $s5, 11
+		andi 	$t0, $t0, 0x1F
+		move	$a0, $t0 
+			jal check_regs	# identifica os registradores
 		
-		la	$a0, str_virgula
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		#isola o rs 
-		srl	$t0, $s5, 21
-		andi $t0, $t0, 0X1F
-		move $a0, $t0	
-		jal check_regs
+		srl		$t0, $s5, 21
+		andi 	$t0, $t0, 0X1F
+		move 	$a0, $t0	
+			jal check_regs
 		
-		j endline_output
+		j 		endline_output
 	
 	funct_jr:
-		la	$a0, str_jr
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_jr
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		#isola o rs 
-		srl	$t0, $s5, 21
-		andi $t0, $t0, 0X1F
-		move $a0, $t0	
-		jal check_regs
+		srl		$t0, $s5, 21
+		andi 	$t0, $t0, 0X1F
+		move 	$a0, $t0	
+			jal check_regs
 		
-		j endline_output
+		j 		endline_output
 	
 	funct_mfhi:
-		la	$a0, str_mfhi
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_mfhi
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		# isola o registrador destino
-		srl $t0, $s5, 11
-		andi $t0, $t0, 0x1F
-		move $a0, $t0 
-		jal check_regs	# identifica os registradores
+		srl 	$t0, $s5, 11
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0 
+			jal check_regs	# identifica os registradores
 		
-		j endline_output
+		j 		endline_output
 	
 	funct_mflo:
-		lw	$a0, -4($sp)
-		la	$a1, str_mflo
-		addi $a2, $zero, 5
-		addi $v0, $zero, WRITE_FILE
+		lw		$a0, -4($sp)
+		la		$a1, str_mflo
+		addi 	$a2, $zero, 5
+		addi 	$v0, $zero, WRITE_FILE
 		syscall
 		
 		# isola o registrador destino
-		srl $t0, $s5, 11
-		andi $t0, $t0, 0x1F
-		move $a0, $t0 
-		jal check_regs	# identifica os registradores
+		srl	 	$t0, $s5, 11
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0 
+			jal check_regs	# identifica os registradores
 		
-		j endline_output
+		j 		endline_output
 	
 	funct_mthi:
-		la	$a0, str_mthi
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_mthi
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		#isola o rs 
-		srl	$t0, $s5, 21
-		andi $t0, $t0, 0X1F
-		move $a0, $t0	
-		jal check_regs
+		srl		$t0, $s5, 21
+		andi 	$t0, $t0, 0X1F
+		move 	$a0, $t0	
+			jal check_regs
 		
-		j endline_output
+		j		endline_output
 	
 	funct_mtlo:
-		la	$a0, str_mtlo
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_mtlo
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		#isola o rs 
-		srl	$t0, $s5, 21
-		andi $t0, $t0, 0X1F
-		move $a0, $t0	
-		jal check_regs
+		srl		$t0, $s5, 21
+		andi 	$t0, $t0, 0X1F
+		move 	$a0, $t0	
+			jal check_regs
 		
-		j endline_output
+		j 		endline_output
 		
 	funct_mult:
-		la	$a0, str_mult
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_mult
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		#isola o rs 
-		srl	$t0, $s5, 21
-		andi $t0, $t0, 0X1F
-		move $a0, $t0	
-		jal check_regs
+		srl		$t0, $s5, 21
+		andi 	$t0, $t0, 0X1F
+		move 	$a0, $t0	
+			jal check_regs
 		
-		la	$a0, str_virgula
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		#rt
-		srl	$t0, $s5, 16
-		andi $t0, $t0, 0x1F
-		move $a0, $t0
-		jal check_regs
+		srl		$t0, $s5, 16
+		andi	$t0, $t0, 0x1F
+		move 	$a0, $t0
+			jal check_regs
 		
-		j endline_output
+		j 		endline_output
 		
 	funct_multu:
-		la	$a0, str_multu
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_multu
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		#isola o rs 
-		srl	$t0, $s5, 21
-		andi $t0, $t0, 0X1F
-		move $a0, $t0	
-		jal check_regs
+		srl		$t0, $s5, 21
+		andi 	$t0, $t0, 0X1F
+		move 	$a0, $t0	
+			jal check_regs
 		
-		la	$a0, str_virgula
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		#rt
-		srl	$t0, $s5, 16
-		andi $t0, $t0, 0x1F
-		move $a0, $t0
-		jal check_regs	
+		srl		$t0, $s5, 16
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0
+			jal check_regs	
 		
-		j endline_output
+		j 		endline_output
 	
 	funct_nor:
-		la	$a0, str_nor
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_nor
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		# isola o registrador destino
-		srl $t0, $s5, 11
-		andi $t0, $t0, 0x1F
-		move $a0, $t0 
-		jal check_regs	# identifica os registradores
+		srl 	$t0, $s5, 11
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0 
+			jal check_regs	# identifica os registradores
 		
-		la	$a0, str_virgula
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		#isola o rs 
-		srl	$t0, $s5, 21
-		andi $t0, $t0, 0X1F
-		move $a0, $t0	
-		jal check_regs
+		srl		$t0, $s5, 21
+		andi 	$t0, $t0, 0X1F
+		move 	$a0, $t0	
+			jal check_regs
 		
-		la	$a0, str_virgula
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		#rt
-		srl	$t0, $s5, 16
-		andi $t0, $t0, 0x1F
-		move $a0, $t0
-		jal check_regs
+		srl		$t0, $s5, 16
+		andi	$t0, $t0, 0x1F
+		move 	$a0, $t0
+			jal check_regs
 		
-		j endline_output
+		j 		endline_output
 	
 	funct_or:
-		la	$a0, str_or
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_or
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		# isola o registrador destino
-		srl $t0, $s5, 11
-		andi $t0, $t0, 0x1F
-		move $a0, $t0 
-		jal check_regs	# identifica os registradores
+		srl 	$t0, $s5, 11
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0 
+			jal check_regs	# identifica os registradores
 		
-		la	$a0, str_virgula
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		#isola o rs 
-		srl	$t0, $s5, 21
-		andi $t0, $t0, 0X1F
-		move $a0, $t0	
-		jal check_regs
+		srl		$t0, $s5, 21
+		andi 	$t0, $t0, 0X1F
+		move 	$a0, $t0	
+			jal check_regs
 		
-		la	$a0, str_virgula
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_virgula
+		addi	$v0, $zero, PRINT_STR
 		syscall
 		
 		#rt
-		srl	$t0, $s5, 16
-		andi $t0, $t0, 0x1F
-		move $a0, $t0
-		jal check_regs	
+		srl		$t0, $s5, 16
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0
+			jal check_regs	
 		
-		j endline_output
+		j 		endline_output
 	
 	funct_sll:
-		la	$a0, str_sll
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_sll
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		##rd
-		srl $t0, $s5, 11
-		andi $t0, $t0, 0x1F
-		move $a0, $t0 
-		jal check_regs	# identifica os registradores
+		srl 	$t0, $s5, 11
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0 
+			jal check_regs	# identifica os registradores
 		
-		la	$a0, str_virgula
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		#rt
-		srl	$t0, $s5, 16
-		andi $t0, $t0, 0x1F
-		move $a0, $t0
-		jal check_regs	
+		srl		$t0, $s5, 16
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0
+			jal check_regs	
 		
-		la	$a0, str_virgula
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		#calcula shamt
-		sll $t0, $s5, 11
-		srl $t0, $t0, 27
+		sll 	$t0, $s5, 11
+		srl 	$t0, $t0, 27
 		
-		move $a0, $t0
-		addi $v0, $0, PRINT_INT
+		move 	$a0, $t0
+		addi 	$v0, $0, PRINT_INT
 		syscall
 		
-		j endline_output
+		j 		endline_output
 
 	funct_sllv:
-		la	$a0, str_sllv
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_sllv
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		# isola o registrador destino
-		srl $t0, $s5, 11
-		andi $t0, $t0, 0x1F
-		move $a0, $t0 
-		jal check_regs	# identifica os registradores
+		srl 	$t0, $s5, 11
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0 
+			jal check_regs	# identifica os registradores
 		
-		la	$a0, str_virgula
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		#isola o rs 
-		srl	$t0, $s5, 21
-		andi $t0, $t0, 0X1F
-		move $a0, $t0	
+		srl		$t0, $s5, 21
+		andi 	$t0, $t0, 0X1F
+		move 	$a0, $t0	
 		jal check_regs
 		
-		la	$a0, str_virgula
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		#rt
-		srl	$t0, $s5, 16
-		andi $t0, $t0, 0x1F
-		move $a0, $t0
-		jal check_regs
+		srl		$t0, $s5, 16
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0
+			jal check_regs
 		
-		j endline_output	
+		j 		endline_output	
 	
 	funct_slt:
-		la	$a0, str_slt
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_slt
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		# isola o registrador destino
-		srl $t0, $s5, 11
-		andi $t0, $t0, 0x1F
-		move $a0, $t0 
-		jal check_regs	# identifica os registradores
+		srl 	$t0, $s5, 11
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0 
+			jal check_regs	# identifica os registradores
 		
-		la	$a0, str_virgula
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		#isola o rs 
-		srl	$t0, $s5, 21
-		andi $t0, $t0, 0X1F
-		move $a0, $t0	
-		jal check_regs
+		srl		$t0, $s5, 21
+		andi 	$t0, $t0, 0X1F
+		move	$a0, $t0	
+			jal check_regs
 		
-		la	$a0, str_virgula
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		#rt
-		srl	$t0, $s5, 16
-		andi $t0, $t0, 0x1F
-		move $a0, $t0
-		jal check_regs	
+		srl		$t0, $s5, 16
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0
+			jal check_regs	
 		
-		j endline_output
+		j		endline_output
 	
 	funct_sltu:
-		la	$a0, str_sltu
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_sltu
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		# isola o registrador destino
-		srl $t0, $s5, 11
-		andi $t0, $t0, 0x1F
-		move $a0, $t0 
-		jal check_regs	# identifica os registradores
+		srl 	$t0, $s5, 11
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0 
+			jal check_regs	# identifica os registradores
 		
-		la	$a0, str_virgula
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		#isola o rs 
-		srl	$t0, $s5, 21
-		andi $t0, $t0, 0X1F
-		move $a0, $t0	
-		jal check_regs
+		srl		$t0, $s5, 21
+		andi 	$t0, $t0, 0X1F
+		move 	$a0, $t0	
+			jal check_regs
 		
-		la	$a0, str_virgula
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		#rt
-		srl	$t0, $s5, 16
-		andi $t0, $t0, 0x1F
-		move $a0, $t0
-		jal check_regs
+		srl		$t0, $s5, 16
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0
+			jal check_regs
 		
-		j endline_output
+		j		endline_output
 	
 	funct_sra:
-		la	$a0, str_sra
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_sra
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		##rd
-		srl $t0, $s5, 11
-		andi $t0, $t0, 0x1F
-		move $a0, $t0 
-		jal check_regs	# identifica os registradores
+		srl 	$t0, $s5, 11
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0 
+			jal check_regs	# identifica os registradores
 		
-		la	$a0, str_virgula
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		#rt
-		srl	$t0, $s5, 16
-		andi $t0, $t0, 0x1F
-		move $a0, $t0
-		jal check_regs	
+		srl		$t0, $s5, 16
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0
+			jal check_regs	
 		
 		#calcula shamt
-		srl $t0, $s5, 6
-		andi $t0, $t0, 0x1F
+		srl 	$t0, $s5, 6
+		andi 	$t0, $t0, 0x1F
 
-		move $a0, $t0
-		addi $v0, $0, PRINT_INT
+		move 	$a0, $t0
+		addi 	$v0, $0, PRINT_INT
 		syscall
-		j endline_output
+		j 		endline_output
 	
 	funct_srav: 
-		la	$a0, str_srav
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_srav
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		# isola o registrador destino
-		srl $t0, $s5, 11
-		andi $t0, $t0, 0x1F
-		move $a0, $t0 
-		jal check_regs	# identifica os registradores
+		srl		$t0, $s5, 11
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0 
+			jal check_regs	# identifica os registradores
 		
-		la	$a0, str_virgula
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		#isola o rs 
-		srl	$t0, $s5, 21
-		andi $t0, $t0, 0X1F
-		move $a0, $t0	
-		jal check_regs
+		srl		$t0, $s5, 21
+		andi 	$t0, $t0, 0X1F
+		move 	$a0, $t0	
+			jal check_regs
 		
-		la	$a0, str_virgula
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		#rt
-		srl	$t0, $s5, 16
-		andi $t0, $t0, 0x1F
-		move $a0, $t0
-		jal check_regs	
+		srl		$t0, $s5, 16
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0
+			jal check_regs	
 		
-		j endline_output
+		j 		endline_output
 	
 	funct_srl:
-		la	$a0, str_srl
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_srl
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		##rd
-		srl $t0, $s5, 11
-		andi $t0, $t0, 0x1F
-		move $a0, $t0 
-		jal check_regs	# identifica os registradores
+		srl 	$t0, $s5, 11
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0 
+			jal check_regs	# identifica os registradores
 		
-		la	$a0, str_virgula
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		#rt
-		srl	$t0, $s5, 16
-		andi $t0, $t0, 0x1F
-		move $a0, $t0
-		jal check_regs	
+		srl		$t0, $s5, 16
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0
+			jal check_regs	
 		
 		#calcula shamt
-		srl $t0, $s5, 6
-		andi $t0, $t0, 0x1F
+		srl 	$t0, $s5, 6
+		andi 	$t0, $t0, 0x1F
 
-		move $a0, $t0
-		addi $v0, $0, PRINT_INT
+		move 	$a0, $t0
+		addi 	$v0, $0, PRINT_INT
 		syscall
 		
-		j endline_output
+		j 		endline_output
 	
 	
 	funct_srlv:
-		la	$a0, str_srlv
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_srlv
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		# isola o registrador destino
-		srl $t0, $s5, 11
-		andi $t0, $t0, 0x1F
-		move $a0, $t0 
-		jal check_regs	# identifica os registradores
+		srl 	$t0, $s5, 11
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0 
+			jal check_regs	# identifica os registradores
 		
-		la	$a0, str_virgula
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		#isola o rs 
-		srl	$t0, $s5, 21
-		andi $t0, $t0, 0X1F
-		move $a0, $t0	
-		jal check_regs
+		srl		$t0, $s5, 21
+		andi 	$t0, $t0, 0X1F
+		move 	$a0, $t0	
+			jal check_regs
 		
-		la	$a0, str_virgula
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		#rt
-		srl	$t0, $s5, 16
-		andi $t0, $t0, 0x1F
-		move $a0, $t0
-		jal check_regs
+		srl		$t0, $s5, 16
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0
+			jal check_regs
 		
-		j endline_output	
+		j 		endline_output	
 	
 	funct_sub: 
-		la	$a0, str_sub
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_sub
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		# isola o registrador destino
-		srl $t0, $s5, 11
-		andi $t0, $t0, 0x1F
-		move $a0, $t0 
-		jal check_regs	# identifica os registradores
+		srl 	$t0, $s5, 11
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0 
+			jal check_regs	# identifica os registradores
 		
-		la	$a0, str_virgula
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		#isola o rs 
-		srl	$t0, $s5, 21
-		andi $t0, $t0, 0X1F
-		move $a0, $t0	
-		jal check_regs
+		srl		$t0, $s5, 21
+		andi 	$t0, $t0, 0X1F
+		move 	$a0, $t0	
+			jal check_regs
 		
-		la	$a0, str_virgula
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
-		srl	$t0, $s5, 16
-		andi $t0, $t0, 0x1F
-		move $a0, $t0
-		jal check_regs
+		srl		$t0, $s5, 16
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0
+			jal check_regs
 		
-		j endline_output
+		j 		endline_output
 	
 	funct_subu:
-		la	$a0, str_subu
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_subu
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		# isola o registrador destino
-		srl $t0, $s5, 11
-		andi $t0, $t0, 0x1F
-		move $a0, $t0 
-		jal check_regs	# identifica os registradores
+		srl 	$t0, $s5, 11
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0 
+			jal check_regs	# identifica os registradores
 		
-		la	$a0, str_virgula
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		#isola o rs 
-		srl	$t0, $s5, 21
-		andi $t0, $t0, 0X1F
-		move $a0, $t0	
-		jal check_regs
+		srl		$t0, $s5, 21
+		andi 	$t0, $t0, 0X1F
+		move 	$a0, $t0	
+			jal check_regs
 		
-		la	$a0, str_virgula
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
-		srl	$t0, $s5, 16
-		andi $t0, $t0, 0x1F
-		move $a0, $t0
-		jal check_regs
+		srl		$t0, $s5, 16
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0
+			jal check_regs
 		
-		j endline_output
+		j 		endline_output
 	
 	funct_syscall:
-		la	$a0, str_syscall
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_syscall
+		addi 	$v0, $zero, PRINT_STR
 		syscall
+		j		endline_output
 	
 	funct_xor:
-		la	$a0, str_xor
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_xor
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		# isola o registrador destino
-		srl $t0, $s5, 11
-		andi $t0, $t0, 0x1F
-		move $a0, $t0 
-		jal check_regs	# identifica os registradores
+		srl 	$t0, $s5, 11
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0 
+			jal check_regs	# identifica os registradores
 		
-		la	$a0, str_virgula
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		#isola o rs 
-		srl	$t0, $s5, 21
+		srl		$t0, $s5, 21
+		andi 	$t0, $t0, 0X1F
+		move	$a0, $t0	
+			jal check_regs
 		
-		andi $t0, $t0, 0X1F
-		move $a0, $t0	
-		jal check_regs
-		
-		la	$a0, str_virgula
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
-		srl	$t0, $s5, 16
-		andi $t0, $t0, 0x1F
-		move $a0, $t0
-		jal check_regs	
+		srl		$t0, $s5, 16
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0
+			jal check_regs	
 		
-		j endline_output
+		j 		endline_output
 
 #############TIPO J###################
 	type_j_jal:
-		la $a0, str_jal
-		addi $v0, $0, PRINT_STR
+		la 		$a0, str_jal
+		addi 	$v0, $0, PRINT_STR
 		syscall
 	
-		j check_j_address
+		j 		check_j_address
 	
 	type_j_j:
-		la $a0, str_j
-		addi $v0, $0, PRINT_STR
+		la 		$a0, str_j
+		addi 	$v0, $0, PRINT_STR
 		syscall
 	
-		j check_j_address
+		j 		check_j_address
 
 ##############TIPO I###################
 	type_i_beq:
 	
-		la $a0, str_beq
-		addi $v0, $0, PRINT_STR
+		la 		$a0, str_beq
+		addi 	$v0, $0, PRINT_STR
 		syscall
 		
 		#isola o rs 
-		srl	$t0, $s5, 21
+		srl		$t0, $s5, 21
 		
-		andi $t0, $t0, 0X1F
-		move $a0, $t0	
-		jal check_regs
+		andi 	$t0, $t0, 0X1F
+		move 	$a0, $t0	
+			jal check_regs
 		
-		la	$a0, str_virgula
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		#rt
-		srl	$t0, $s5, 16
-		andi $t0, $t0, 0x1F
-		move $a0, $t0
-		jal check_regs
+		srl		$t0, $s5, 16
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0
+			jal check_regs
 		
-		la	$a0, str_virgula
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
-		j imm_ext
+			jal imm_ext
+		
+		j 		endline_output
 	
 	type_i_bne:
+	
+		la 		$a0, str_bne
+		addi 	$v0, $0, PRINT_STR
+		syscall
+		
+		#isola o rs 
+		srl		$t0, $s5, 21
+		
+		andi 	$t0, $t0, 0X1F
+		move 	$a0, $t0	
+			jal check_regs
+		
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
+		syscall
+		
+		#rt
+		srl		$t0, $s5, 16
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0
+			jal check_regs
+		
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
+		syscall
+		
+			jal imm_ext
+		
+		j 		endline_output
+		
 	type_i_blez:
+		la 		$a0, str_blez
+		addi 	$v0, $0, PRINT_STR
+		syscall
+		
+		#isola o rs 
+		srl		$t0, $s5, 21
+		andi 	$t0, $t0, 0X1F
+		move 	$a0, $t0	
+			jal check_regs
+		
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
+		syscall
+		
+		j		check_immediate
+	
 	type_i_bgtz:
+		la 		$a0, str_bgtz
+		addi 	$v0, $0, PRINT_STR
+		syscall
+		
+		#isola o rs 
+		srl		$t0, $s5, 21
+		
+		andi 	$t0, $t0, 0X1F
+		move 	$a0, $t0	
+			jal check_regs
+		
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
+		syscall
+		
+		j		check_immediate
+	
 	
 	type_i_addi:
 	
-		la $a0, str_addi
-		addi $v0, $0, PRINT_STR
+		la 		$a0, str_addi
+		addi 	$v0, $0, PRINT_STR
 		syscall
 		
 		#rt
-		srl	$t0, $s5, 16
-		andi $t0, $t0, 0x1F
-		move $a0, $t0
-		jal check_regs
+		srl		$t0, $s5, 16
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0
+			jal check_regs
 		
-		la	$a0, str_virgula
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		#isola o rs 
-		srl	$t0, $s5, 21
+		srl		$t0, $s5, 21
+		andi 	$t0, $t0, 0X1F
+		move 	$a0, $t0	
+			jal check_regs
 		
-		andi $t0, $t0, 0X1F
-		move $a0, $t0	
-		jal check_regs
-		
-		la	$a0, str_virgula
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
-		j	check_immediate
+		j		check_immediate
 		
 	type_i_addiu:
+		la 		$a0, str_addiu
+		addi 	$v0, $0, PRINT_STR
+		syscall
+		
+		#rt
+		srl		$t0, $s5, 16
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0
+			jal check_regs
+		
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
+		syscall
+		
+		#isola o rs 
+		srl		$t0, $s5, 21
+		andi 	$t0, $t0, 0X1F
+		move 	$a0, $t0	
+			jal check_regs
+		
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
+		syscall
+		
+		j		check_immediate
+	
 	type_i_slti:
+		la 		$a0, str_slti
+		addi 	$v0, $0, PRINT_STR
+		syscall
+		
+		#rt
+		srl		$t0, $s5, 16
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0
+			jal check_regs
+		
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
+		syscall
+		
+		#isola o rs 
+		srl		$t0, $s5, 21
+		
+		andi	$t0, $t0, 0X1F
+		move 	$a0, $t0	
+			jal check_regs
+		
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
+		syscall
+		
+		j		check_immediate
+	
 	type_i_sltiu:
+		la 		$a0, str_sltiu
+		addi 	$v0, $0, PRINT_STR
+		syscall
+		
+		#rt
+		srl		$t0, $s5, 16
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0
+			jal check_regs
+		
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
+		syscall
+		
+		#isola o rs 
+		srl		$t0, $s5, 21
+		andi 	$t0, $t0, 0X1F
+		move	$a0, $t0	
+			jal check_regs
+		
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
+		syscall
+		
+		j		check_immediate
+	
 	type_i_andi:
+		la 		$a0, str_andi
+		addi 	$v0, $0, PRINT_STR
+		syscall
+		
+		#rt
+		srl		$t0, $s5, 16
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0
+			jal check_regs
+		
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
+		syscall
+		
+		#isola o rs 
+		srl		$t0, $s5, 21
+		andi 	$t0, $t0, 0X1F
+		move 	$a0, $t0	
+			jal check_regs
+		
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
+		syscall
+		
+		j		check_immediate
+
 	type_i_ori:
+		la 		$a0, str_ori
+		addi	$v0, $0, PRINT_STR
+		syscall
+		
+		#rt
+		srl		$t0, $s5, 16
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0
+			jal check_regs
+		
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
+		syscall
+		
+		#isola o rs 
+		srl		$t0, $s5, 21
+		andi 	$t0, $t0, 0X1F
+		move 	$a0, $t0	
+			jal check_regs
+		
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
+		syscall
+		
+		j		check_immediate
+		
 	type_i_xori:
+	
+		la 		$a0, str_xori
+		addi 	$v0, $0, PRINT_STR
+		syscall
+		
+		#rt
+		srl		$t0, $s5, 16
+		andi 	$t0, $t0, 0x1F
+		move 	$a0, $t0
+			jal check_regs
+		
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
+		syscall
+		
+		#isola o rs 
+		srl		$t0, $s5, 21
+		andi 	$t0, $t0, 0X1F
+		move 	$a0, $t0	
+			jal check_regs
+		
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
+		syscall
+		
+		j		check_immediate
+		
 	type_i_lui:
+		la 		$a0, str_lui
+		addi 	$v0, $0, PRINT_STR
+		syscall
+		
+		#rt
+		srl		$t0, $s5, 16
+		andi 	$t0, $t0, 0x1F
+		move	$a0, $t0
+			jal check_regs
+		
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
+		syscall
+		
+		j		check_immediate
+		
 	type_i_lb:
+	#	lb rt, imm(rs)
+	
+		la		$a0, str_lb
+		addi	$v0, $zero, PRINT_STR
+		syscall
+		
+		#rt
+		srl		$t0, $s5, 16
+		andi 	$t0, $t0, 0x1F
+		move	$a0, $t0
+			jal check_regs
+		
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
+		syscall
+	
+			jal imm_ext
+		
+		la		$a0, str_abre_par
+		addi	$v0, $0, PRINT_STR
+		syscall
+		
+		#isola o rs 
+		srl		$t0, $s5, 21
+		andi 	$t0, $t0, 0X1F
+		move 	$a0, $t0	
+			jal check_regs
+		
+		la		$a0, str_fecha_par
+		addi	$v0, $0, PRINT_STR
+		syscall
+		
+		j 		endline_output
+	
 	type_i_lh:
+		la		$a0, str_lh
+		addi	$v0, $zero, PRINT_STR
+		syscall
+		
+		#rt
+		srl		$t0, $s5, 16
+		andi 	$t0, $t0, 0x1F
+		move	$a0, $t0
+			jal check_regs
+		
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
+		syscall
+	
+			jal imm_ext
+		
+		la		$a0, str_abre_par
+		addi	$v0, $0, PRINT_STR
+		syscall
+		
+		#isola o rs 
+		srl		$t0, $s5, 21
+		andi 	$t0, $t0, 0X1F
+		move 	$a0, $t0	
+			jal check_regs
+		
+		la		$a0, str_fecha_par
+		addi	$v0, $0, PRINT_STR
+		syscall
+		
+		j 		endline_output
+	
 	type_i_lwl:
+		la		$a0, str_lwl
+		addi	$v0, $zero, PRINT_STR
+		syscall
+		
+		#rt
+		srl		$t0, $s5, 16
+		andi 	$t0, $t0, 0x1F
+		move	$a0, $t0
+			jal check_regs
+		
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
+		syscall
+	
+			jal imm_ext
+		
+		la		$a0, str_abre_par
+		addi	$v0, $0, PRINT_STR
+		syscall
+		
+		#isola o rs 
+		srl		$t0, $s5, 21
+		andi 	$t0, $t0, 0X1F
+		move 	$a0, $t0	
+			jal check_regs
+		
+		la		$a0, str_fecha_par
+		addi	$v0, $0, PRINT_STR
+		syscall
+		
+		j endline_output
+		
 	type_i_lw:
+		la		$a0, str_lw
+		addi	$v0, $zero, PRINT_STR
+		syscall
+		
+		#rt
+		srl		$t0, $s5, 16
+		andi 	$t0, $t0, 0x1F
+		move	$a0, $t0
+			jal check_regs
+		
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
+		syscall
+	
+			jal imm_ext
+		
+		la		$a0, str_abre_par
+		addi	$v0, $0, PRINT_STR
+		syscall
+		
+		#isola o rs 
+		srl		$t0, $s5, 21
+		andi 	$t0, $t0, 0X1F
+		move 	$a0, $t0	
+			jal check_regs
+		
+		la		$a0, str_fecha_par
+		addi	$v0, $0, PRINT_STR
+		syscall
+		
+		j 		endline_output
+		
 	type_i_lbu:
+		la		$a0, str_lbu
+		addi	$v0, $zero, PRINT_STR
+		syscall
+		
+		#rt
+		srl		$t0, $s5, 16
+		andi 	$t0, $t0, 0x1F
+		move	$a0, $t0
+			jal check_regs
+		
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
+		syscall
+	
+			jal imm_ext
+		
+		la		$a0, str_abre_par
+		addi	$v0, $0, PRINT_STR
+		syscall
+		
+		#isola o rs 
+		srl		$t0, $s5, 21
+		andi 	$t0, $t0, 0X1F
+		move 	$a0, $t0	
+			jal check_regs
+		
+		la		$a0, str_fecha_par
+		addi	$v0, $0, PRINT_STR
+		syscall
+		
+		j 		endline_output
+	
 	type_i_lhu:
+		la		$a0, str_lhu
+		addi	$v0, $zero, PRINT_STR
+		syscall
+		
+		#rt
+		srl		$t0, $s5, 16
+		andi 	$t0, $t0, 0x1F
+		move	$a0, $t0
+			jal check_regs
+		
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
+		syscall
+	
+			jal imm_ext
+		
+		la		$a0, str_abre_par
+		addi	$v0, $0, PRINT_STR
+		syscall
+		
+		#isola o rs 
+		srl		$t0, $s5, 21
+		andi 	$t0, $t0, 0X1F
+		move 	$a0, $t0	
+			jal check_regs
+		
+		la		$a0, str_fecha_par
+		addi	$v0, $0, PRINT_STR
+		syscall
+		
+		j 		endline_output
+	
 	type_i_lwr:
+		la		$a0, str_lwr
+		addi	$v0, $zero, PRINT_STR
+		syscall
+		
+		#rt
+		srl		$t0, $s5, 16
+		andi 	$t0, $t0, 0x1F
+		move	$a0, $t0
+			jal check_regs
+		
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
+		syscall
+	
+			jal imm_ext
+		
+		la		$a0, str_abre_par
+		addi	$v0, $0, PRINT_STR
+		syscall
+		
+		#isola o rs 
+		srl		$t0, $s5, 21
+		andi 	$t0, $t0, 0X1F
+		move 	$a0, $t0	
+			jal check_regs
+		
+		la		$a0, str_fecha_par
+		addi	$v0, $0, PRINT_STR
+		syscall
+		
+		j	 	endline_output
+	
 	type_i_sb:
+		la		$a0, str_sb
+		addi	$v0, $zero, PRINT_STR
+		syscall
+		
+		#rt
+		srl		$t0, $s5, 16
+		andi 	$t0, $t0, 0x1F
+		move	$a0, $t0
+			jal check_regs
+		
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
+		syscall
+	
+			jal imm_ext
+		
+		la		$a0, str_abre_par
+		addi	$v0, $0, PRINT_STR
+		syscall
+		
+		#isola o rs 
+		srl		$t0, $s5, 21
+		andi 	$t0, $t0, 0X1F
+		move 	$a0, $t0	
+			jal check_regs
+		
+		la		$a0, str_fecha_par
+		addi	$v0, $0, PRINT_STR
+		syscall
+		
+		j 		endline_output
+	
 	type_i_sh:
+		la		$a0, str_sh
+		addi	$v0, $zero, PRINT_STR
+		syscall
+		
+		#rt
+		srl		$t0, $s5, 16
+		andi 	$t0, $t0, 0x1F
+		move	$a0, $t0
+			jal check_regs
+		
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
+		syscall
+	
+			jal imm_ext
+		
+		la		$a0, str_abre_par
+		addi	$v0, $0, PRINT_STR
+		syscall
+		
+		#isola o rs 
+		srl		$t0, $s5, 21
+		andi 	$t0, $t0, 0X1F
+		move 	$a0, $t0	
+			jal check_regs
+		
+		la		$a0, str_fecha_par
+		addi	$v0, $0, PRINT_STR
+		syscall
+		
+		j 		endline_output
+	
 	type_i_swl:
+		la		$a0, str_swl
+		addi	$v0, $zero, PRINT_STR
+		syscall
+		
+		#rt
+		srl		$t0, $s5, 16
+		andi 	$t0, $t0, 0x1F
+		move	$a0, $t0
+			jal check_regs
+		
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
+		syscall
+	
+			jal imm_ext
+		
+		la		$a0, str_abre_par
+		addi	$v0, $0, PRINT_STR
+		syscall
+		
+		#isola o rs 
+		srl		$t0, $s5, 21
+		andi 	$t0, $t0, 0X1F
+		move 	$a0, $t0	
+			jal check_regs
+		
+		la		$a0, str_fecha_par
+		addi	$v0, $0, PRINT_STR
+		syscall
+		
+		j 		endline_output
+	
 	type_i_sw:
+		la		$a0, str_sw
+		addi	$v0, $zero, PRINT_STR
+		syscall
+		
+		#rt
+		srl		$t0, $s5, 16
+		andi 	$t0, $t0, 0x1F
+		move	$a0, $t0
+			jal check_regs
+		
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
+		syscall
+	
+			jal imm_ext
+		
+		la		$a0, str_abre_par
+		addi	$v0, $0, PRINT_STR
+		syscall
+		
+		#isola o rs 
+		srl		$t0, $s5, 21
+		andi 	$t0, $t0, 0X1F
+		move 	$a0, $t0	
+			jal check_regs
+		
+		la		$a0, str_fecha_par
+		addi	$v0, $0, PRINT_STR
+		syscall
+		
+		j 		endline_output
+	
 	type_i_swr:
+		la		$a0, str_swr
+		addi	$v0, $zero, PRINT_STR
+		syscall
+		
+		#rt
+		srl		$t0, $s5, 16
+		andi 	$t0, $t0, 0x1F
+		move	$a0, $t0
+			jal check_regs
+		
+		la		$a0, str_virgula
+		addi 	$v0, $zero, PRINT_STR
+		syscall
+	
+			jal imm_ext
+		
+		la		$a0, str_abre_par
+		addi	$v0, $0, PRINT_STR
+		syscall
+		
+		#isola o rs 
+		srl		$t0, $s5, 21
+		andi 	$t0, $t0, 0X1F
+		move 	$a0, $t0	
+			jal check_regs
+		
+		la		$a0, str_fecha_par
+		addi	$v0, $0, PRINT_STR
+		syscall
+		
+		j 		endline_output
 	
 ######## registradores, imediates & endereço de procedimentos #######
 
 check_immediate:
 
-	li $t1, 0x0000FFFF
-	and $t1, $s5, $t1
+	addi 	$t1, $zero, 0x0000FFFF
+	and 	$t1, $s5, $t1
 	
-	move $a0,$t1
-	la $a1, buffer
-	jal to_string
+	move 	$a0,$t1
+	la 		$a1, buffer
+		jal to_string
 	
-	la $a0, buffer
-	addi $v0, $zero, PRINT_STR
+	la 		$a0, buffer
+	addi 	$v0, $zero, PRINT_STR
 	syscall
 	
-	j endline_output
+	j 		endline_output
 
 imm_ext:
+	addi 	$sp, $sp, -4
+	sw	 	$ra, 0($sp)
 	
-	li 	$t1, 0x0000FFFF
-	and $t1, $s5, $t1
+	addi 	$t1, $zero, 0x0000FFFF
+	and 	$t1, $s5, $t1
 	
-	sll	$t1, $t1, 16
-	sra $t1, $t1, 16
+	sll		$t1, $t1, 16
+	sra 	$t1, $t1, 16
 	
-	move $a0, $t1
-	la 	$a1, buffer
-	jal to_string
+	move 	$a0, $t1
+	la 		$a1, buffer
+		jal to_string
 	
-	la $a0, buffer
-	addi $v0, $zero, PRINT_STR
+	la 		$a0, buffer
+	addi 	$v0, $zero, PRINT_STR
 	syscall
 	
-	j endline_output
+	lw	 	$ra, 0($sp)
+	addi 	$sp, $sp, 4
+	
+	jr	$ra
 
 check_j_address:
 	
 	#mascara p pegar os 26 bits
-	li $t1, 0x3FFFFFF
-	and $t1, $s5, $t1
+	addi 	$t1, $zero, 0x3FFFFFF
+	and 	$t1, $s5, $t1
 	
-    move $a0, $t1
-    la  $a1, buffer
-    jal to_string # funcao para transformar o valor hexa em string
+    move 	$a0, $t1
+    la  	$a1, buffer
+    	jal to_string # funcao para transformar o valor hexa em string
 
-    la  $a0, buffer
-    addi $v0, $zero, PRINT_STR
+    la  	$a0, buffer
+    addi 	$v0, $zero, PRINT_STR
     syscall
-	j endline_output
+	j 		endline_output
 
 check_regs:
 	beq $a0, 0x00, reg00 # $zero
@@ -1049,173 +1675,177 @@ check_regs:
 	j exit
 	
 reg00:
-		la	$a0, str_r0
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_r0
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		
 		jr $ra
 
 reg01:
-		la	$a0, str_r1
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_r1
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		jr $ra
 reg02:
-		la	$a0, str_r2
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_r2
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		jr $ra
 
 reg03:
-		la	$a0, str_r3
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_r3
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		jr $ra
+		
 reg04:
-		la	$a0, str_r4
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_r4
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		jr $ra
+		
 reg05:
-		la	$a0, str_r5
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_r5
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		jr $ra
+		
 reg06:
-		la	$a0, str_r6
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_r6
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		jr $ra
+		
 reg07:
-		la	$a0, str_r7
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_r7
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		jr $ra
+		
 reg08:
-		la	$a0, str_r8
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_r8
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		jr $ra
 reg09:
-		la	$a0, str_r9
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_r9
+		addi 	$v0, $zero, PRINT_STR
 		syscall		
 		jr $ra
 reg10:
-		la	$a0, str_r10
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_r10
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		jr $ra
 reg11:
-		la	$a0, str_r11
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_r11
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		jr $ra
 reg12:
-		la	$a0, str_r12
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_r12
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		jr $ra
 reg13:
-		la	$a0, str_r13
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_r13
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		jr $ra
 reg14:
-		la	$a0, str_r14
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_r14
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		jr $ra
 reg15:
-		la	$a0, str_r15
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_r15
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		jr $ra
 reg16:
-		la	$a0, str_r16
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_r16
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		jr $ra
 reg17:
-		la	$a0, str_r17
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_r17
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		jr $ra
 reg18:
-		la	$a0, str_r18
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_r18
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		jr $ra
 reg19:
-		la	$a0, str_r19
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_r19
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		jr $ra
 reg20:
-		la	$a0, str_r20
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_r20
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		jr $ra
 reg21:
-		la	$a0, str_r21
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_r21
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		jr $ra
 reg22:
-		la	$a0, str_r22
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_r22
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		jr $ra
 reg23:
-		la	$a0, str_r23
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_r23
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		jr $ra
 		
 reg24:
-		la	$a0, str_r24
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_r24
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		jr $ra
 		
 reg25:
-		la	$a0, str_r25
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_r25
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		jr $ra
 reg26:
-		la	$a0, str_r26
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_r26
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		jr $ra
 reg27:
-		la	$a0, str_r27
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_r27
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		jr $ra
 reg28:
-		la	$a0, str_r28
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_r28
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		jr $ra
 
 reg29:
-		la	$a0, str_r29
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_r29
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		jr $ra
 reg30:
-		la	$a0, str_r30
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_r30
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		jr $ra
 reg31:
-		la	$a0, str_r31
-		addi $v0, $zero, PRINT_STR
+		la		$a0, str_r31
+		addi 	$v0, $zero, PRINT_STR
 		syscall
 		jr $ra
-		
-		
+			
 to_string:
 	#a0 -> valor para conversão
 	#a1 -> endereço do valor para conversão
@@ -1236,22 +1866,26 @@ to_string:
 		#obtem o nibble
 		# srlv para conseguir de 4 em 4
 		
-		and	$s1, $a0, $s0
-		srlv $s1, $s1, $t0
-		add	$s1, $s1, $t1
+		and		$s1, $a0, $s0
+		srlv 	$s1, $s1, $t0
+		add		$s1, $s1, $t1
 		
-		lbu	$s1, 0($s1)
-		sb	$s1, 0($a1) 
+		lbu		$s1, 0($s1)
+		sb		$s1, 0($a1) 
 		
-		addiu $a1, $a1, 1 	#incrementa em 1 o ponteiro do endereço do valor de conversao
-		addiu $t0, $t0, -4	# decrementa do contador 4 bits
-		srl $s0, $s0, 4		#ajusta a máscara
+		addiu 	$a1, $a1, 1 	#incrementa em 1 o ponteiro do endereço do valor de conversao
+		addiu 	$t0, $t0, -4	# decrementa do contador 4 bits
+		srl 	$s0, $s0, 4		#ajusta a máscara
 		
-		bne	$s0, $zero, loop_str	#se a máscara for diferente de 0, continua chamando funcao
-		lb 	$0, 0($a1)				#zera o endereço da instrucao para ir pra proxima instrucao e reiniciar a conversão
+		bne		$s0, $zero, loop_str	#se a máscara for diferente de 0, continua chamando funcao
+		lb 		$0, 0($a1)				#zera o endereço da instrucao para ir pra proxima instrucao e reiniciar a conversão
 		
 	jr	$ra
+	
 .data
+
+#input
+input_file:			.asciiz "input.bin"
 
 ## input test
 sucesso:			.asciiz "sucesso\n"
@@ -1267,6 +1901,7 @@ inst_sll:			.word   0x01281040 #sll $t0, $t1, 4
 inst_break:			.word   0x0000000D
 inst_j:				.word   0x08010000
 inst_jal:			.word	0x0c000000
+inst_lb:			.word	0x82080100
 
 buffer:				.space	128
 
@@ -1307,6 +1942,7 @@ str_syscall:		.asciiz "syscall "		#001100
 str_xor:			.asciiz "xor "			#100110
 
 
+
 ## type j
 
 str_jal:			.asciiz "jal "			#000011
@@ -1329,14 +1965,18 @@ str_lh:				.asciiz "lh " #rt, imm(rs)	100001
 str_lhu:			.asciiz "lhu " #rt, imm(rs)	100101	
 str_lui:			.asciiz "lui "#rt, imm	001111	
 str_lw:				.asciiz "lw " #rt, imm(rs)	100011	
-str_lwc1:			.asciiz "lwc1 " #rt, imm(rs)	110001	
+str_lwc1:			.asciiz "lwc1 " #rt, imm(rs)	110001
+str_lwl:			.asciiz "lwl "	
+str_lwr:			.asciiz "lwr "
 str_ori:			.asciiz "ori " #rt, rs, imm	001101	
 str_sb:				.asciiz "sb " #rt, imm(rs)	101000	
 str_slti:			.asciiz "slti " #rt, rs, imm	001010	
 str_sltiu:			.asciiz "sltiu " #rt, rs, imm	001011	
 str_sh:				.asciiz "sh " #rt, imm(rs)	101001	
 str_sw:				.asciiz "sw " #rt, imm(rs)	101011	
-str_swc1:			.asciiz "swc1 " #rt, imm(rs)	111001	
+str_swc1:			.asciiz "swc1 " #rt, imm(rs)	111001
+str_swl:			.asciiz "swl "
+str_swr:			.asciiz "swr "
 str_xori:			.asciiz "xori " #rt, rs, imm	001110	
 
 ## registradores
